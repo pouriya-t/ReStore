@@ -42,7 +42,13 @@ export default function Header({ darkMode, setDarkMode }) {
         }}
       >
         <Box display="flex" alignItems="center">
-          <Typography variant="h6" component={NavLink} to="/" sx={navStyles}>
+          <Typography
+            variant="h6"
+            component={NavLink}
+            exact
+            to="/"
+            sx={navStyles}
+          >
             RE-STORE
           </Typography>
           <Switch onClick={() => setDarkMode(!darkMode)} />
