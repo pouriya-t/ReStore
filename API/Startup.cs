@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using API.Data;
 using API.Middleware;
@@ -30,7 +31,8 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(); ;
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -48,8 +50,8 @@ namespace API
         {
 
             app.UseMiddleware<ExceptionMiddleware>(); // This middleware customized for internal (500) server error
-            // and comment this line : app.UseDeveloperExceptionPage();
-            
+                                                      // and comment this line : app.UseDeveloperExceptionPage();
+
             if (env.IsDevelopment())
             {
                 // app.UseDeveloperExceptionPage();
@@ -62,7 +64,10 @@ namespace API
             app.UseRouting();
             app.UseCors(opt =>
             {
-                opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+                opt.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials()
+                    .WithOrigins("http://localhost:3000");
             });
 
             app.UseAuthorization();
