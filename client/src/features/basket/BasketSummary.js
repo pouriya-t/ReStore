@@ -19,7 +19,11 @@ export default function BasketSummary({ basket }) {
 
   return (
     <>
-      <TableContainer component={Paper} variant={"outlined"}>
+      <TableContainer
+        component={Paper}
+        variant={"outlined"}
+        sx={{ backgroundColor: "#f0f5f5" }}
+      >
         <Table>
           <TableBody>
             <TableRow>

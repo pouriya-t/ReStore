@@ -11,7 +11,7 @@ import { ShoppingCart } from "@mui/icons-material";
 import { Box } from "@material-ui/system";
 import Switch from "@mui/material/Switch";
 import { Link, NavLink } from "react-router-dom";
-import { useStoreContext } from "../../app/context/StoreContext";
+import { useAppSelector } from "../store/configureStore";
 
 const midLinks = [
   { title: "catalog", path: "/catalog" },
@@ -33,8 +33,10 @@ const navStyles = {
 };
 
 export default function Header({ darkMode, setDarkMode }) {
-  const { basket } = useStoreContext();
-  const itemCount = basket.items.reduce((sum, item) => sum + item.quantity, 0);
+  const { basket } = useAppSelector((state) => state.basket);
+  const itemCount = basket
+    ? basket.items.reduce((sum, item) => sum + item.quantity, 0)
+    : 0;
 
   return (
     <AppBar position="static" sx={{ mb: 4 }}>
