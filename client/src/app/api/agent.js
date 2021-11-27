@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { history } from "../..";
+import { PaginatedResponse } from "../models/pagination";
 
 const sleep = () => new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -12,6 +13,14 @@ const responseBody = (response) => response.data;
 axios.interceptors.response.use(
   async (response) => {
     await sleep();
+    const pagination = response.headers["pagination"];
+    if (pagination) {
+      response.data = new PaginatedResponse(
+        response.data,
+        JSON.parse(pagination)
+      );
+      return response;
+    }
     return response;
   },
   (error) => {
@@ -46,15 +55,16 @@ axios.interceptors.response.use(
 );
 
 const requests = {
-  get: (url) => axios.get(url).then(responseBody),
+  get: (url, params = null) => axios.get(url, { params }).then(responseBody),
   post: (url, body) => axios.post(url, body).then(responseBody),
   put: (url, body) => axios.put(url, body).then(responseBody),
   delete: (url) => axios.delete(url).then(responseBody),
 };
 
 const Catalog = {
-  list: () => requests.get("products"),
+  list: (params) => requests.get("products", params),
   details: (id) => requests.get(`products/${id}`),
+  fetchFilters: () => requests.get("products/filters"),
 };
 
 const TestErrors = {
