@@ -12,6 +12,7 @@ import { Box } from "@material-ui/system";
 import Switch from "@mui/material/Switch";
 import { Link, NavLink } from "react-router-dom";
 import { useAppSelector } from "../store/configureStore";
+import SignedInMenu from "./SignedInMenu";
 
 const midLinks = [
   { title: "catalog", path: "/catalog" },
@@ -34,6 +35,7 @@ const navStyles = {
 
 export default function Header({ darkMode, setDarkMode }) {
   const { basket } = useAppSelector((state) => state.basket);
+  const { user } = useAppSelector((state) => state.account);
   const itemCount = basket
     ? basket.items.reduce((sum, item) => sum + item.quantity, 0)
     : 0;
@@ -77,13 +79,22 @@ export default function Header({ darkMode, setDarkMode }) {
               <ShoppingCart />
             </Badge>
           </IconButton>
-          <List sx={{ display: "flex", sm: "flex" }}>
-            {rightLinks.map(({ title, path }) => (
-              <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
-                {title.toUpperCase()}
-              </ListItem>
-            ))}
-          </List>
+          {user ? (
+            <SignedInMenu />
+          ) : (
+            <List sx={{ display: "flex", sm: "flex" }}>
+              {rightLinks.map(({ title, path }) => (
+                <ListItem
+                  component={NavLink}
+                  to={path}
+                  key={path}
+                  sx={navStyles}
+                >
+                  {title.toUpperCase()}
+                </ListItem>
+              ))}
+            </List>
+          )}
         </Box>
       </Toolbar>
     </AppBar>
