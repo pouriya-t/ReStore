@@ -94,21 +94,26 @@ const Account = {
   login: (values) => requests.post("account/login", values),
   register: (values) => requests.post("account/register", values),
   currentUser: () => requests.get("account/currentUser"),
-  fetchAddress: () => requests.get('account/savedAddress')
+  fetchAddress: () => requests.get("account/savedAddress"),
 };
 
 const Orders = {
-  list: () => requests.get('orders'),
+  list: () => requests.get("orders"),
   fetch: (id) => requests.get(`orders/${id}`),
-  create: (values) => requests.post('orders', values),
-}
+  create: (values) => requests.post("orders", values),
+};
+
+const Payments = {
+  createPaymentIntent: () => requests.post("payments", {}),
+};
 
 const agent = {
   Catalog,
   TestErrors,
   Basket,
   Account,
-  Orders
+  Orders,
+  Payments,
 };
 
 export default agent;
