@@ -9,9 +9,8 @@ namespace API.Controllers
     {
         public IActionResult Index()
         {
-            return Ok("Hello");
-            // return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "index.html"),
-            //         "text/HTML");
+            return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "index.html"),
+                    "text/HTML");
         }
     }
 }
