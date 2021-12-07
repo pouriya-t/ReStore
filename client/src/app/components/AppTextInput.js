@@ -1,4 +1,4 @@
-import { TextField } from "@material-ui/core";
+import { TextField } from "@mui/material";
 import { useController } from "react-hook-form";
 
 export default function AppTextInput(props) {
@@ -7,6 +7,9 @@ export default function AppTextInput(props) {
     <TextField
       {...props}
       {...field}
+      multiline={props.multiline}
+      rows={props.rows}
+      type={props.type}
       fullWidth
       variant="outlined"
       error={!!fieldState.error}
